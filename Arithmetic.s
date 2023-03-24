@@ -21,6 +21,7 @@ equalsMsg:
 	 movl $0, y
 	.lcomm z, 32
 	 movl $0, z
+	 
 .text                   # code segment
 .global main
 main:            
@@ -103,8 +104,10 @@ main:
     movq $0x2, %rdx         # length of the message    
     int  $0x80              # system interrupt to kernel
 
-# Reset z to 0
-    movl $0, z
+# Reset
+    movl $0, z              # Reset z to 0
+    movq $0, %rdx           # move value 0 to rdx register
+    movq $0, %rax           # move value 0 to rax register
 
 
 # MINUS x - y = 
@@ -158,8 +161,10 @@ main:
     movq $0x2, %rdx         # length of the message    
     int  $0x80              # system interrupt to kernel
 
-# Reset z to 0
-    movl $0, z
+# Reset
+    movl $0, z              # Reset z to 0
+    movq $0, %rdx           # move value 0 to rdx register
+    movq $0, %rax           # move value 0 to rax register
 
 # MULTIPLY x * y = 
 
@@ -202,7 +207,7 @@ main:
     subq $0x30, %rax        # subtract ASCII value for '0' to convert to number
 
 # Calculation
-    imulq %rdx, %rax        # multiply by x and store result in rdx ? register
+    imulq %rax, %rdx        # multiply by x and store result in rdx register
     addq $0x30, %rdx        # add ASCII value for '0' to convert back to ASCII
     movq %rdx, z            # store ASCII value into z
 
