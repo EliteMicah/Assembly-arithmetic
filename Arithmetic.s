@@ -101,7 +101,7 @@ main:
     movq $4, %rax           # sys_write    
     movq $1, %rbx           # $1 is stdout    
     movq $z, %rcx           # output z
-    movq $0x2, %rdx         # length of the message    
+    movq $0x1, %rdx         # length of the message    
     int  $0x80              # system interrupt to kernel
 
 # Reset
@@ -158,7 +158,7 @@ main:
     movq $4, %rax           # sys_write    
     movq $1, %rbx           # $1 is stdout    
     movq $z, %rcx           # output z
-    movq $0x2, %rdx         # length of the message    
+    movq $0x1, %rdx         # length of the message    
     int  $0x80              # system interrupt to kernel
 
 # Reset
@@ -215,7 +215,7 @@ main:
     movq $4, %rax           # sys_write    
     movq $1, %rbx           # $1 is stdout    
     movq $z, %rcx           # output z
-    movq $0x2, %rdx         # length of the message    
+    movq $0x1, %rdx         # length of the message    
     int  $0x80              # system interrupt to kernel
 
 
