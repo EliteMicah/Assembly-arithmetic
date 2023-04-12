@@ -54,7 +54,8 @@ main:
 
 
 # PLUS x + y = 
-
+    call plus
+plus:
 # NewLine message
     movq $4, %rax           # sys_write    
     movq $1, %rbx           # $1 is stdout    
@@ -111,7 +112,8 @@ main:
 
 
 # MINUS x - y = 
-
+    call minus
+minus:
 # NewLine message
     movq $4, %rax           # sys_write
     movq $1, %rbx           # $1 is stdout
@@ -167,7 +169,8 @@ main:
     movq $0, %rax           # move value 0 to rax register
 
 # MULTIPLY x * y = 
-
+    call multiply
+multiply:
 # NewLine message
     movq $4, %rax           # sys_write    
     movq $1, %rbx           # $1 is stdout    
@@ -217,8 +220,10 @@ main:
     movq $z, %rcx           # output z
     movq $0x1, %rdx         # length of the message    
     int  $0x80              # system interrupt to kernel
+    
+    call end
 
-
+end:
 # Exit with return 0
 	movl $1, %eax       # exit(0) - $1 is sys_exit    
 	movl $0, %ebx       # 0 is return value    
