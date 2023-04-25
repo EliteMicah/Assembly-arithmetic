@@ -22,39 +22,8 @@ equalsMsg:
 	.lcomm z, 32
 	 movl $0, z
 	 
-.text                   # code segment
-.global main
-main:            
-
-# Prompt user for x
-	movq $4, %rax       # sys_write    
-	movq $1, %rbx       # $1 is stdout    
-	movq $varX, %rcx    # message to write    
-	movq $20, %rdx      # length of the message    
-	int  $0x80          # system interrupt to kernel    
-# Read x
-	movq $3, %rax       # sys_read    
-	movq $0, %rbx       # $0 is stdin    
-	movq $x, %rcx       # m   
-	movq $0x2, %rdx     # size    
-	int $0x80           # system interrupt to kernel
-
-# Prompt user for y
-	movq $4, %rax       # sys_write    
-	movq $1, %rbx       # $1 is stdout    
-	movq $varY, %rcx    # message to write    
-	movq $20, %rdx      # length of the message    
-	int  $0x80          # system interrupt to kernel    
-# Read y
-	movq $3, %rax       # sys_read    
-	movq $0, %rbx       # $0 is stdin    
-	movq $y, %rcx       # y
-	movq $0x2, %rdx     # size    
-	int $0x80           # system interrupt to kernel
-
-
-# PLUS x + y = 
-    call plus
+.text # code segment
+// Defining the "plus" procedure
 plus:
 # NewLine message
     movq $4, %rax           # sys_write    
@@ -104,15 +73,10 @@ plus:
     movq $z, %rcx           # output z
     movq $0x1, %rdx         # length of the message    
     int  $0x80              # system interrupt to kernel
+# Return from procedure
+    ret
 
-# Reset
-    movl $0, z              # Reset z to 0
-    movq $0, %rdx           # move value 0 to rdx register
-    movq $0, %rax           # move value 0 to rax register
-
-
-# MINUS x - y = 
-    call minus
+// Defining the "minus" procedure
 minus:
 # NewLine message
     movq $4, %rax           # sys_write
@@ -162,14 +126,10 @@ minus:
     movq $z, %rcx           # output z
     movq $0x1, %rdx         # length of the message    
     int  $0x80              # system interrupt to kernel
+# Return from procedure
+    ret
 
-# Reset
-    movl $0, z              # Reset z to 0
-    movq $0, %rdx           # move value 0 to rdx register
-    movq $0, %rax           # move value 0 to rax register
-
-# MULTIPLY x * y = 
-    call multiply
+// Defining the "multiply" procedure
 multiply:
 # NewLine message
     movq $4, %rax           # sys_write    
@@ -220,8 +180,58 @@ multiply:
     movq $z, %rcx           # output z
     movq $0x1, %rdx         # length of the message    
     int  $0x80              # system interrupt to kernel
-    
-    call end
+# Return from procedure
+    ret
+
+.global main
+main:            
+
+# Prompt user for x
+	movq $4, %rax       # sys_write    
+	movq $1, %rbx       # $1 is stdout    
+	movq $varX, %rcx    # message to write    
+	movq $20, %rdx      # length of the message    
+	int  $0x80          # system interrupt to kernel    
+# Read x
+	movq $3, %rax       # sys_read    
+	movq $0, %rbx       # $0 is stdin    
+	movq $x, %rcx       # m   
+	movq $0x2, %rdx     # size    
+	int $0x80           # system interrupt to kernel
+
+# Prompt user for y
+	movq $4, %rax       # sys_write    
+	movq $1, %rbx       # $1 is stdout    
+	movq $varY, %rcx    # message to write    
+	movq $20, %rdx      # length of the message    
+	int  $0x80          # system interrupt to kernel    
+# Read y
+	movq $3, %rax       # sys_read    
+	movq $0, %rbx       # $0 is stdin    
+	movq $y, %rcx       # y
+	movq $0x2, %rdx     # size    
+	int $0x80           # system interrupt to kernel
+
+
+# PLUS x + y = 
+    call plus
+
+# Reset
+    movl $0, z              # Reset z to 0
+    movq $0, %rdx           # move value 0 to rdx register
+    movq $0, %rax           # move value 0 to rax register
+
+
+# MINUS x - y = 
+    call minus
+
+# Reset
+    movl $0, z              # Reset z to 0
+    movq $0, %rdx           # move value 0 to rdx register
+    movq $0, %rax           # move value 0 to rax register
+
+# MULTIPLY x * y = 
+    call multiply
 
 end:
 # Exit with return 0
